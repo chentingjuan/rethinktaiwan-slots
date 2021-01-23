@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/rethinktaiwan-slots/static/css/main.2adccdf0.chunk.css",
+    "main.css": "/rethinktaiwan-slots/static/css/main.9d41e953.chunk.css",
     "main.js": "/rethinktaiwan-slots/static/js/main.20643c23.chunk.js",
     "main.js.map": "/rethinktaiwan-slots/static/js/main.20643c23.chunk.js.map",
     "runtime-main.js": "/rethinktaiwan-slots/static/js/runtime-main.f2c2784b.js",
@@ -10,14 +10,14 @@
     "static/js/3.d16ba561.chunk.js": "/rethinktaiwan-slots/static/js/3.d16ba561.chunk.js",
     "static/js/3.d16ba561.chunk.js.map": "/rethinktaiwan-slots/static/js/3.d16ba561.chunk.js.map",
     "index.html": "/rethinktaiwan-slots/index.html",
-    "static/css/main.2adccdf0.chunk.css.map": "/rethinktaiwan-slots/static/css/main.2adccdf0.chunk.css.map",
+    "static/css/main.9d41e953.chunk.css.map": "/rethinktaiwan-slots/static/css/main.9d41e953.chunk.css.map",
     "static/js/2.4de2e3e6.chunk.js.LICENSE.txt": "/rethinktaiwan-slots/static/js/2.4de2e3e6.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/rethinktaiwan-slots/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.f2c2784b.js",
     "static/js/2.4de2e3e6.chunk.js",
-    "static/css/main.2adccdf0.chunk.css",
+    "static/css/main.9d41e953.chunk.css",
     "static/js/main.20643c23.chunk.js"
   ]
 }
