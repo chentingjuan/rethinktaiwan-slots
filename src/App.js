@@ -5,27 +5,20 @@ import rawData from './data'
 
 let data = { location: {}, thing: {}, feeling: {} }
 Object.keys(rawData).map((teamId, i) => {
-  // data[teamId] = {
-  //   "location": { visited: false, value: rawData[teamId][0] },
-  //   "thing": { visited: false, value: rawData[teamId][1] },
-  //   "feeling": { visited: false, value: rawData[teamId][2] }
-  // }
   data.location[teamId] = rawData[teamId][0]
   data.thing[teamId] = rawData[teamId][1]
   data.feeling[teamId] = rawData[teamId][2]
-  //   "location": { visited: false, value: rawData[teamId][0] },
-  //   "thing": { visited: false, value: rawData[teamId][1] },
-  //   "feeling": { visited: false, value: rawData[teamId][2] }
-  // }
 })
 
 const App = () => {
   const [activeIds, setActiveIds] = useState(null)
   const [superRandomMode, setSuperRandomMode] = useState(false)
+  const [idsDisplayed, setIdsDisplayed] = useState([false, false, false])
   // console.log(rawData)
   // console.log(data)
 
   const handleButtonClicked = async () => {
+    setIdsDisplayed([false, false, false])
     await deleteActiveData()
     if(superRandomMode) {
       let newActiveIds = [];
@@ -38,6 +31,17 @@ const App = () => {
       const currentIds = Object.keys(data.location)
       const newActiveId = currentIds[getRandomInt(currentIds.length)]
       setActiveIds([newActiveId, newActiveId, newActiveId])
+    }
+  }
+
+  const handleItemMouseOver = (index) => {
+    if(activeIds[0]===activeIds[1] && activeIds[1]===activeIds[2]) {
+      setIdsDisplayed([true, true, true])
+    } else {     
+      setIdsDisplayed(prevState => {
+        prevState[index] = true
+        return [...prevState]
+      })
     }
   }
 
@@ -75,19 +79,22 @@ const App = () => {
             
         if(activeIds && Object.keys(data.location).length)
           .screen
-            .item-wrapper 
-              .item  
-                span #{activeIds[0]}
+            .item-wrapper(onMouseOver=()=>handleItemMouseOver(0))
+              .item
+                span.id(className=idsDisplayed[0] ? "active" : "") ##{activeIds[0]}
+
                 span #{data.location[activeIds[0]]}
 
-            .item-wrapper 
+            .item-wrapper(onMouseOver=()=>handleItemMouseOver(1))
               .item
-                span #{activeIds[1]} 
+                span.id(className=idsDisplayed[1] ? "active" : "") ##{activeIds[1]} 
+
                 span #{data.thing[activeIds[1]]} 
             
-            .item-wrapper 
+            .item-wrapper(onMouseOver=()=>handleItemMouseOver(2))
               .item
-                span #{activeIds[2]} 
+                span.id(className=idsDisplayed[2] ? "active" : "") ##{activeIds[2]} 
+
                 span #{data.feeling[activeIds[2]]} 
         
         else
@@ -118,7 +125,7 @@ const App = () => {
                
       hr
 
-      h4 全部的資料：
+      h4 全部的資料：（正式版不會顯示）
 
       table #{renderRawData}
   `

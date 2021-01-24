@@ -6,7 +6,7 @@
   display: inline-block;
   margin: 3rem;
   padding: 1rem;
-  width: 50vw;
+  width: 80vw;
   min-width: 300px;
   max-width: 800px;
   border: solid 1px #999;
@@ -33,9 +33,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+      cursor: pointer;
+      &:hover {
+        background-color: #eee;
+      }
       .item {
         display: flex;
         flex-direction: column;
+        
+        .id {
+          position: absolute;
+          right: 4px;
+          bottom: 2px;
+          opacity: 0;
+          &.active {
+            opacity: 1;
+            transition: 0.3s ease;
+          }
+        }
       }
     }
   }
