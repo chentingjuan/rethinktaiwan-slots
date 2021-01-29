@@ -67,6 +67,21 @@ const App = () => {
 
   return pug`
     .App
+      .modal
+        .content
+          h2 ２０幾天的行動，印象最深刻的一件事？
+
+          p 
+            | 請於主持人問完「這是誰的一件事？」
+            br
+            | 倒數３秒內，舉手搶答，並說出解答
+            br
+            | 成功者，則會獲得「提案如何不緊張」小卡
+      
+      if(activeId===null)
+        button(
+          onClick=()=>handleNextRoundButtonClicked(activeId)) 開始
+
       .machine-wrapper
         div(
           onClick=()=>setIsRotated(true)
@@ -112,26 +127,27 @@ const App = () => {
                   |#{renderRightItems}
 
                 .cover(className=!isRotated ? "open" : "")
-                  .content
-                    h2 ２０幾天的行動，印象最深刻的一件事？
-              
-                    p 
-                      | 請於主持人問完「這是誰的一件事？」
-                      br
-                      | 倒數３秒內，舉手搶答，並說出解答
-                      br
-                      | 成功者，則會獲得「提案如何不緊張」小卡
-                    
-                    if(activeId===null)
-                      button(
-                        onClick=()=>handleNextRoundButtonClicked(activeId)) 開始
-
+                  
                 .shadow
 
+        .machine-center
+
+        .machine-bottom
           .team-wrapper(className=idDisplayed ? "active" : "") 
             .team 
-              .id ##{activeId}
               .name #{teamName[activeId]}
+              .id ##{activeId}
+
+          .buttons-wrapper 
+            .btn.btn-display(
+              onClick=()=>setIdDisplayed(true)
+              className=(!isRotated || !activeId || selectableIds.length<=1 || idDisplayed) ? "disabled" : ""
+            )
+
+            .btn.btn-next(
+              onClick=()=>handleNextRoundButtonClicked(activeId)
+              className=(!isRotated || !idDisplayed || selectableIds.length<=1) ? "disabled" : ""
+            )
           
           .control-bar 
             // if(activeId)
@@ -140,18 +156,18 @@ const App = () => {
             // else
             //   .remain
 
-            if(activeId)
-              button(
-                onClick=()=>handleNextRoundButtonClicked(activeId)
-                disabled=!isRotated || !idDisplayed || selectableIds.length<=1) 下一回合 
+            // if(activeId)
+            //   button(
+            //     onClick=()=>handleNextRoundButtonClicked(activeId)
+            //     disabled=!isRotated || !idDisplayed || selectableIds.length<=1) 下一回合 
             
             // button(
               onClick=()=>setIsRotated(true)
               disabled=!activeId || selectableIds.length<=1 || isRotated) 拉桿 
 
-            button(
-              onClick=()=>setIdDisplayed(true)
-              disabled=!activeId || selectableIds.length<=1 || idDisplayed) 揭曉 
+            // button(
+            //   onClick=()=>setIdDisplayed(true)
+            //   disabled=!activeId || selectableIds.length<=1 || idDisplayed) 揭曉 
                 
         // hr
 

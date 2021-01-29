@@ -3,8 +3,10 @@ $dark_dark_green: #00364B;
 $medium_green: #3C9195;
 $light_green: #6BFFBA;
 $light_dark_green: #27E1B5;
+$grass_green: #96C216;
 $grey: #EEEEEE;
-$yello: #FFB33C;
+$light_yellow: #FFCD32;
+$yellow: #FFB33C;
 $orange: #FF9947;
 $red: #FF665C;
 
@@ -15,7 +17,17 @@ $red: #FF665C;
   }
 }
 
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .disabled {
+  pointer-events: none;
+  cursor: initial;
+  // opacity: 0.8;
   & > * {
     pointer-events: none;
     cursor: initial;
@@ -80,9 +92,9 @@ $red: #FF665C;
     background-color: $dark_green;
     // border-bottom: solid 30px $dark_dark_green;
     width: 40%;
-    height: 100px;
+    height: 10vw;
     margin: 0 auto;
-    border-radius: 8px;
+    border-radius: 1rem;
     overflow: hidden;
     position: relative;
     &::after {
@@ -90,7 +102,7 @@ $red: #FF665C;
       position: absolute;
       left: 0;
       width: 100%;
-      height: 20px;
+      height: 2.5vw;
       bottom: 0;
       background-color: $dark_dark_green;
       z-index: 1;
@@ -98,24 +110,120 @@ $red: #FF665C;
     .team {
       opacity: 0;
       position: absolute;
-      padding: 1rem 0.5rem;
+      padding: 2.5rem 0.5rem;
       border-radius: 4px;
       left: 50%;
       bottom: 120%;
       transition: 0.3s ease;
       transform: translate(0, -150%);
-      background-color: #eee;
-      width: calc(100% - 48px);
+      background-color: $light_yellow;
+      border: solid 6px $orange;
+      width: calc(100% - 4rem);
       transform: translate(-50%, 0);
       transition: bottom 0.3s ease;
+      color: $dark_green;
+      font-size: 1.6vw;
       z-index: 2;
+      .id {
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+        font-size: 1.2vw;
+        font-weight: 600;
+      }
+      .name {
+        font-weight: 800;
+      }
     }
-    
+
     &.active {
       .team {
         bottom: 10px;
         opacity: 1;
         // transform: translate(0, 0);
+      }
+    }
+  }
+
+  .buttons-wrapper {
+    // position: absolute;
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    .btn {
+      width: 6vw;
+      height: 6vw;
+      border-radius: 50%;
+      position: relative;
+      margin: 0 1.5vw 0 0;
+      cursor: pointer;
+      background-color: $dark_green;
+      border: solid 3px $dark_green;
+      &::before {
+        text-align: center;
+        // content: '';
+        line-height: 6vw;
+        position: absolute;
+        z-index: 1;
+        border-radius: 50%;
+        top: -8px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 100%;
+        height: 100%;
+        transition: 0.3s ease;
+        font-weight: 800;
+        font-size: 1rem;
+        color: $dark_dark_green;
+        border: solid 2px $dark_green;
+      }
+      &:hover {
+        &::before {
+          top: -4px;
+        }
+      }
+      &.disabled {
+        &::before {
+          animation: none;
+        }
+      }
+    }
+    .btn-display {
+      &::before {
+        content: '揭露';
+        background-color: $medium_green;
+        animation: btn-1 2s 1s ease-in-out infinite;
+        @keyframes btn-1 {
+          0% {
+            background-color: $medium_green;
+          }
+          50% {
+            background-color: $light_dark_green;
+          }
+          100% {
+            background-color: $medium_green;
+          }
+        }
+      } 
+    }
+    .btn-next {
+      &::before {
+        content: 'Next';
+        background-color: $red;
+        animation: btn-2 2s 1s ease-in-out infinite;
+        @keyframes btn-2 {
+          0% {
+            background-color: $red;
+          }
+          50% {
+            background-color: $orange;
+          }
+          100% {
+            background-color: $red;
+          }
+        }
       }
     }
   }
@@ -210,10 +318,10 @@ table {
   width: 70vw;
   // height: 60vw;
   border-radius: 1rem;
-  border-top: 30px solid $light_green;
-  border-right: 10px solid $light_green;
-  border-left: 10px solid $light_green;
-  background-color: $light_green;
+  border-top: 30px solid $light_dark_green;
+  border-right: 14px solid $light_dark_green;
+  border-left: 14px solid $light_dark_green;
+  background-color: $light_dark_green;
   .rod-wrapper {
     position: absolute;
     right: calc(-5vw - 5px);
@@ -307,17 +415,14 @@ table {
 }
 
 .machine-top {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  
-  // border-radius: 1rem;
-  
-  // -webkit-transform: translate3d(-50%, -50%, 0);
-          // transform: translate3d(-50%, -50%, 0);
   overflow: hidden;
   border-radius: 1rem;
   background-color: $medium_green;
+}
+
+.machine-bottom {
+  padding: 1.5rem 0 0;
+  position: relative;
 }
 
 h2 {
@@ -328,7 +433,7 @@ h2 {
 
 .slots-wrapper {
   width: 90%;
-  margin: 1rem auto 2rem;
+  margin: 1.5rem auto 2.5rem;
 }
 
 .titles {
@@ -340,15 +445,15 @@ h2 {
     position: relative;
   }
   .title {    
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 900;
     padding: 1rem;
-    background-color: $dark_green;
+    background-color: $grey;
     border-radius: 1rem;
-    border-top: 4px solid $light_green;
-    width: 80%;
+    border-top: 6px solid $light_green;
+    width: 85%;
     margin: 0 auto;
-    color: $light_green;
+    color: $dark_dark_green;
     letter-spacing: 1px;
   }
 }
@@ -368,7 +473,7 @@ h2 {
     border-radius: 8px;
     overflow: hidden;
     background-color: $dark_green;
-    border: solid 5px $light_dark_green;
+    border: solid 6px $light_dark_green;
     .cover {
       content: "";
       position: absolute;
@@ -376,14 +481,14 @@ h2 {
       top: -0.5rem;
       right: -0.2rem;
       bottom: -0.5rem;
-      background-color: $yello;
+      background-color: $yellow;
       border-radius: 1rem;
       border-bottom: 16px solid $orange;
       border-top: 8px solid $orange;
       z-index: 9;
       -webkit-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
-      transition: 1s;
+      transition: 0.6s;
       .content {
         position: absolute;
         left: 50%;
@@ -408,15 +513,15 @@ h2 {
         left: 0; right: 0;
         
         background-color: #148B93;
-        opacity: 0.3;
+        opacity: 0.2;
       }
       &::before {
         top: 0;
-        height: 4vw;
+        height: 4.5vw;
       }
       &::after {
         bottom: 0;
-        height: 1.4vw;
+        height: 1.8vw;
       }
     }
   }
@@ -542,6 +647,7 @@ h2 {
   // background-color: rgba(204, 193, 163, 0.95);
   padding: 0 1rem;
   background-color: $grey;
+  color: $dark_dark_green;
   -webkit-transform-origin: 50% 50%;
           transform-origin: 50% 50%;
 }
