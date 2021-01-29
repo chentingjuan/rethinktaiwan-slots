@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import logo from './logo.svg'
+import React, { useEffect, useState, useRef } from 'react'
 import './App.scss'
 import rawData from './data'
+// import SlotMachine from 'jquery-slotmachine/lib/slot-machine.js'
 
 let data = { location: {}, thing: {}, feeling: {} }
 Object.keys(rawData).map((teamId, i) => {
@@ -11,13 +11,30 @@ Object.keys(rawData).map((teamId, i) => {
 })
 
 const App = () => {
+  // const [started, setStarted] = useState(false)
   const [activeIds, setActiveIds] = useState(null)
   const [superRandomMode, setSuperRandomMode] = useState(false)
   const [idsDisplayed, setIdsDisplayed] = useState([false, false, false])
-  // console.log(rawData)
-  // console.log(data)
+  const itemLeftRef = useRef(null)
+  const itemCenterRef = useRef(null)
+  const itemRightRef = useRef(null)
+  // let itemLeftMachine, itemCenterMachine, itemRightMachine;
 
-  const handleButtonClicked = async () => {
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   if(activeIds && started) {
+  //     console.log(activeIds)
+  //     console.log(itemLeftRef, itemCenterRef, itemRightRef)
+  //     itemLeftMachine = new SlotMachine(itemLeftRef.current, { delay: 0, auto: 1500 });
+  //     itemCenterMachine = new SlotMachine(itemCenterRef.current, { delay: 0, auto: 1500 });
+  //     itemRightMachine = new SlotMachine(itemRightRef.current, { delay: 0, auto: 1500 });
+  //   }
+  //   // }, 0)
+  // }, [activeIds, started])
+
+  const handleNextRoundButtonClicked = async () => {
+    // if(!started) setStarted(true)
+
     setIdsDisplayed([false, false, false])
     await deleteActiveData()
     if(superRandomMode) {
@@ -79,19 +96,28 @@ const App = () => {
             
         if(activeIds && Object.keys(data.location).length)
           .screen
-            .item-wrapper(onMouseOver=()=>handleItemMouseOver(0))
+            .item-wrapper(
+              ref=itemLeftRef
+              onMouseOver=()=>handleItemMouseOver(0)
+            )
               .item
                 span.id(className=idsDisplayed[0] ? "active" : "") ##{activeIds[0]}
 
                 span #{data.location[activeIds[0]]}
 
-            .item-wrapper(onMouseOver=()=>handleItemMouseOver(1))
+            .item-wrapper(
+              ref=itemCenterRef
+              onMouseOver=()=>handleItemMouseOver(1)
+            )
               .item
                 span.id(className=idsDisplayed[1] ? "active" : "") ##{activeIds[1]} 
 
                 span #{data.thing[activeIds[1]]} 
             
-            .item-wrapper(onMouseOver=()=>handleItemMouseOver(2))
+            .item-wrapper(
+              ref=itemRightRef
+              onMouseOver=()=>handleItemMouseOver(2)
+            )
               .item
                 span.id(className=idsDisplayed[2] ? "active" : "") ##{activeIds[2]} 
 
@@ -119,9 +145,10 @@ const App = () => {
             onClick=()=>setSuperRandomMode(true) 
             disabled=superRandomMode||Object.keys(data.location).length<=1) 超級混合模式
 
-          button(
-            onClick=handleButtonClicked
-            disabled=Object.keys(data.location).length<=1) 下一回合 
+          if(activeId)
+            button(
+              onClick=handleNextRoundButtonClicked
+              disabled=Object.keys(data.location).length<=1) 下一回合 
                
       hr
 
