@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import './App.scss'
 import rawData from './data'
 import teamName from './data-team-name'
+import actionMan from './../action_man.svg'
 // import SlotMachine from 'jquery-slotmachine/lib/slot-machine.js'
 
 let data = { left: {}, center: {}, right: {} }
@@ -21,6 +22,8 @@ const App = () => {
   const itemCenterRef = useRef(null)
   const itemRightRef = useRef(null)
   // let itemLeftMachine, itemCenterMachine, itemRightMachine;
+
+  console.log(selectableIds.length)
 
   const handleNextRoundButtonClicked = (prevId) => {
     setIdDisplayed(false)
@@ -63,26 +66,24 @@ const App = () => {
 
   // console.log('hello: ', activeId ? `${activeId} ${data.left[activeId]}` : '')
 
-  const rodWrapperClass = `rod-wrapper + ${isRotated ? 'active': ''} ${(!activeId || selectableIds.length<=1 || isRotated) ? 'disabled' : ''}`
+  const rodWrapperClass = `rod-wrapper + ${isRotated ? 'active': ''} ${(!activeId || selectableIds.length<=0 || isRotated) ? 'disabled' : ''}`
 
   return pug`
     .App
-      .modal
-        .content
-          h2 ２０幾天的行動，印象最深刻的一件事？
-
-          p 
-            | 請於主持人問完「這是誰的一件事？」
-            br
-            | 倒數３秒內，舉手搶答，並說出解答
-            br
-            | 成功者，則會獲得「提案如何不緊張」小卡
+      // p 
+        | 請於主持人問完「這是誰的一件事？」
+        br
+        | 倒數３秒內，舉手搶答，並說出解答
+        br
+        | 成功者，則會獲得「提案如何不緊張」小卡
       
-      if(activeId===null)
+      // if(activeId===null)
         button(
           onClick=()=>handleNextRoundButtonClicked(activeId)) 開始
 
       .machine-wrapper
+        h2 20 幾天的行動，印象最深刻的一件事？
+
         div(
           onClick=()=>setIsRotated(true)
           className=rodWrapperClass
@@ -95,13 +96,28 @@ const App = () => {
           .slots-wrapper
             .titles
               div
-                .title #{activeId ? data.left[activeId].label : '？'}
-              
-              div
-                .title #{activeId ? data.center[activeId].label : '？'}
+                if(activeId)
+                  .title #{data.left[activeId].label}
+
+                else 
+                  .title
+                    img(src=actionMan)
 
               div
-                .title #{activeId ? data.right[activeId].label : '？'}
+                if(activeId)
+                  .title #{data.center[activeId].label}
+
+                else 
+                  .title
+                    img(src=actionMan)
+
+              div
+                if(activeId)
+                  .title #{data.right[activeId].label}
+
+                else 
+                  .title
+                    img(src=actionMan)
 
             .slots
               .slots-inner-wrapper
@@ -127,7 +143,17 @@ const App = () => {
                   |#{renderRightItems}
 
                 .cover(className=!isRotated ? "open" : "")
-                  
+                  if(activeId===null)
+                    h5
+                      | 請於主持人問完「這是誰的一件事？」
+                      br
+                      | 倒數３秒內，舉手搶答，並說出解答
+                      br
+                      | 成功者，則會獲得「提案如何不緊張」小卡
+                      
+                    .btn-start(
+                      onClick=()=>handleNextRoundButtonClicked(activeId)) Start
+                      
                 .shadow
 
         .machine-center
@@ -141,21 +167,21 @@ const App = () => {
           .buttons-wrapper 
             .btn.btn-display(
               onClick=()=>setIdDisplayed(true)
-              className=(!isRotated || !activeId || selectableIds.length<=1 || idDisplayed) ? "disabled" : ""
+              className=(!isRotated || !activeId || selectableIds.length<=0 || idDisplayed) ? "disabled" : ""
             )
 
             .btn.btn-next(
               onClick=()=>handleNextRoundButtonClicked(activeId)
-              className=(!isRotated || !idDisplayed || selectableIds.length<=1) ? "disabled" : ""
+              className=(!isRotated || !idDisplayed || selectableIds.length<=0) ? "disabled" : ""
             )
-          
-          .control-bar 
-            // if(activeId)
-            //   .remain 剩下 #{Object.keys(data.left).length-1} 回合
+            
+          // if(activeId)
+          //   .remain 剩下 #{selectableIds.length-1} 回合
 
-            // else
-            //   .remain
+          // else
+          //   .remain
 
+          .control-bar
             // if(activeId)
             //   button(
             //     onClick=()=>handleNextRoundButtonClicked(activeId)
@@ -167,9 +193,7 @@ const App = () => {
 
             // button(
             //   onClick=()=>setIdDisplayed(true)
-            //   disabled=!activeId || selectableIds.length<=1 || idDisplayed) 揭曉 
-                
-        // hr
+            //   disabled=!activeId || selectableIds.length<=1 || idDisplayed) 揭曉
 
         // h4 全部的資料：（正式版不會顯示）
 
