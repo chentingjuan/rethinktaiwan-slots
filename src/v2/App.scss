@@ -447,11 +447,11 @@ h2 {
   .title {    
     font-size: 1.1rem;
     font-weight: 900;
-    padding: 1rem;
+    padding: 1.5rem 0.5rem;
     background-color: $grey;
     border-radius: 1rem;
-    border-top: 6px solid $light_green;
-    width: 85%;
+    border-bottom: 8px solid $light_green;
+    width: 90%;
     margin: 0 auto;
     color: $dark_dark_green;
     letter-spacing: 1px;
